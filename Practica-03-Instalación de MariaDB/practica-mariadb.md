@@ -72,7 +72,7 @@ systemctl is-active apache2
 
 Salida relevante: la última línea responde `active`, así que Apache funciona correctamente.
 
-![Captura 2](img/2.png)
+![Captura 2](Img/2.png)
 
 *Captura 2: actualización de la lista de paquetes y de los paquetes del sistema, y comprobación de que Apache está activo (`active`).*
 
@@ -86,7 +86,7 @@ sudo apt install mariadb-server -y
 
 **Qué hace y por qué:** instala el servidor de base de datos MariaDB desde los repositorios oficiales de Ubuntu. Es la pieza **M** del LAMP y es donde WordPress guardará sus datos.
 
-![Captura 3](img/3.png)
+![Captura 3](Img/3.png)
 
 *Captura 3: comando de instalación del servidor MariaDB (`sudo apt install mariadb-server -y`).*
 
@@ -104,7 +104,7 @@ mariadb  Ver 15.1 Distrib 10.11.14-MariaDB, for debian-linux-gnu (x86_64) using 
 
 **Qué hace y por qué:** muestra la versión del cliente de MariaDB. Sirve para confirmar que la instalación ha terminado bien y saber con qué versión (10.11) voy a trabajar.
 
-![Captura 4](img/4.png)
+![Captura 4](Img/4.png)
 
 *Captura 4: versión de MariaDB instalada, `10.11.14-MariaDB` (`mariadb --version`).*
 
@@ -126,11 +126,11 @@ Salida relevante:
 - `status`: `active (running)`, con el mensaje "Taking your SQL requests now...", lo que indica que el servicio está funcionando y listo para recibir peticiones.
 - `is-enabled`: `enabled`, es decir, arranca automáticamente con el sistema.
 
-![Captura 5](img/5.png)
+![Captura 5](Img/5.png)
 
 *Captura 5: estado del servicio MariaDB (`sudo systemctl status mariadb`): cargado y habilitado (`enabled`), `active (running)`, con su registro de arranque. Para salir de esta pantalla se pulsa `q`.*
 
-![Captura 6](img/6.png)
+![Captura 6](Img/6.png)
 
 *Captura 6: comprobación de que MariaDB arranca automáticamente con el sistema (`systemctl is-enabled mariadb` responde `enabled`).*
 
@@ -142,7 +142,7 @@ sudo mariadb
 
 **Qué hace y por qué:** abre el monitor de MariaDB (su consola). Si aparece el mensaje de bienvenida y el prompt cambia a `MariaDB [(none)]>`, significa que el servidor responde. Con eso queda comprobado que MariaDB funciona; después escribí `exit` para volver al terminal de Linux.
 
-![Captura 7](img/7.png)
+![Captura 7](Img/7.png)
 
 *Captura 7: entrada en el monitor de MariaDB (mensaje "Welcome to the MariaDB monitor", versión del servidor `10.11.14-MariaDB-0ubuntu0.24.04.1`) y salida con `exit`.*
 
@@ -183,7 +183,7 @@ ERROR 2002 (HY000): Can't connect to local server through socket '/run/mysqld/my
 
 **Qué significa:** `inactive` indica que el servicio está parado, y el error 2002 quiere decir "no puedo conectar con MariaDB porque no está en marcha" (el *socket* es el canal por el que se comunica el cliente con el servidor, y no existe si el servidor está apagado).
 
-![Captura 8](img/8.png)
+![Captura 8](Img/8.png)
 
 *Captura 8: MariaDB detenido a propósito. `is-active` responde `inactive` y al intentar entrar aparece el `ERROR 2002 (HY000)` porque no se puede conectar con el servidor.*
 
@@ -194,7 +194,7 @@ sudo systemctl start mariadb
 systemctl is-active mariadb
 ```
 
-![Captura 9](img/9.png)
+![Captura 9](Img/9.png)
 
 *Captura 9: recuperación del servicio. Tras `sudo systemctl start mariadb`, `systemctl is-active mariadb` responde de nuevo `active`.*
 
@@ -220,7 +220,7 @@ sudo apt install php libapache2-mod-php php-mysql php-curl php-gd php-mbstring p
 php -v
 ```
 
-![Captura 10](img/10.png)
+![Captura 10](Img/10.png)
 
 *Captura 10: instalación de PHP y de los módulos necesarios para WordPress (`php`, `libapache2-mod-php`, `php-mysql`, `php-curl`, `php-gd`, `php-mbstring`, `php-xml`, `php-zip` y `php-intl`).*
 
@@ -244,7 +244,7 @@ Salida de `php -v`:
 PHP 8.3.6 (cli) (built: Oct  7 2026 18:06:38) (NTS)
 ```
 
-![Captura 11](img/11.png)
+![Captura 11](Img/11.png)
 
 *Captura 11: versión de PHP instalada, `PHP 8.3.6` (`php -v`).*
 
@@ -273,7 +273,7 @@ pdo_mysql
 
 **Qué hace y por qué:** `php -m` lista los módulos de PHP y `grep -i mysql` se queda solo con los relacionados con MySQL/MariaDB. Aparecen `mysqli`, `mysqlnd` y `pdo_mysql`, que son las piezas que usa WordPress para conectarse a la base de datos.
 
-![Captura 13](img/13.png)
+![Captura 13](Img/13.png)
 
 *Captura 13: módulos de PHP para base de datos (`php -m | grep -i mysql`): `mysqli`, `mysqlnd` y `pdo_mysql`.*
 
@@ -285,11 +285,11 @@ echo '<?php phpinfo();' | sudo tee /var/www/html/info.php
 
 **Qué hace y por qué:** crea un fichero de prueba `info.php` con una sola instrucción, `phpinfo()`, que muestra toda la información de PHP. Después abrí `http://IP_DE_TU_SERVIDOR/info.php` en el navegador: si Apache muestra la página de información de PHP en lugar de descargar o enseñar el código, es que Apache está ejecutando PHP correctamente.
 
-![Captura 14](img/14.png)
+![Captura 14](Img/14.png)
 
 *Captura 14: creación del fichero de prueba `/var/www/html/info.php` con el contenido `<?php phpinfo();`.*
 
-![Captura 15](img/15.png)
+![Captura 15](Img/15.png)
 
 *Captura 15: página `info.php` abierta en el navegador. Se ve la información de Apache (`Apache/2.4.58 (Ubuntu)`, usuario `www-data`, sitio virtual, módulos cargados como `mod_php` y `prefork`), lo que confirma que Apache ejecuta PHP.*
 
@@ -302,7 +302,7 @@ ls /var/www/html
 
 **Qué hace y por qué:** elimina el fichero de prueba y con `ls` compruebo que ya no está; solo quedan `404.html` e `index.html`. Es obligatorio borrarlo por seguridad (ver la pregunta de reflexión).
 
-![Captura 16](img/16.png)
+![Captura 16](Img/16.png)
 
 *Captura 16: borrado de `info.php` (`sudo rm`) y comprobación con `ls /var/www/html`, donde solo quedan `404.html` e `index.html`.*
 
@@ -327,7 +327,7 @@ php -v
 
 **Qué hace y por qué:** comprueba de una vez que Apache y MariaDB están funcionando (`active` dos veces) y que PHP está instalado con la versión esperada. Es la comprobación de que el servidor está listo para instalar WordPress.
 
-![Captura 17](img/17.png)
+![Captura 17](Img/17.png)
 
 *Captura 17: comprobación final. `systemctl is-active apache2 mariadb` responde `active` dos veces y `php -v` muestra `PHP 8.3.6`.*
 

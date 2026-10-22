@@ -56,7 +56,7 @@ sudo systemctl reload apache2
 
 Salida relevante: Apache avisa de que hay que recargar la configuración para que el cambio se aplique, y por eso se ejecuta el `reload`.
 
-![Captura 1](img/1.png)
+![Captura 1](Img/1.png)
 
 *Captura 1: activación del sitio virtual por defecto (`a2ensite 000-default.conf`) y recarga de Apache con `systemctl reload apache2`.*
 

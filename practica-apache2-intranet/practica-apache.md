@@ -54,7 +54,7 @@ Aquí ya sí se actualizan todos los paquetes que tienen versión nueva. El `-y`
 lsb_release -a
 ```
 
-![Versión de Ubuntu](img/03-lsb-release.png)
+![Versión de Ubuntu](Img/3.png)
 
 Con esto compruebo que tengo Ubuntu 24.04.5 LTS (se llama noble), que es la que pide la práctica. LTS quiere decir que tiene soporte durante muchos años, por eso se usa en servidores. Lo de "No LSB modules are available" no es un error, sale siempre.
 
@@ -68,7 +68,7 @@ Con esto compruebo que tengo Ubuntu 24.04.5 LTS (se llama noble), que es la que 
 sudo apt install apache2 -y
 ```
 
-![sudo apt install apache2 -y](img/04-apt-install-apache2.png)
+![sudo apt install apache2 -y](Img/4.png)
 
 Instala el servidor web Apache. Cuando termina, Ubuntu ya lo arranca solo y lo deja puesto para que se inicie cada vez que enciendo la máquina.
 
@@ -78,7 +78,7 @@ Instala el servidor web Apache. Cuando termina, Ubuntu ya lo arranca solo y lo d
 apache2 -v
 ```
 
-![apache2 -v](img/05-apache2-version.png)
+![apache2 -v](Img/5.png)
 
 Tengo la versión 2.4.58 de Apache.
 
@@ -110,7 +110,7 @@ grep -A3 "install apache2" /var/log/apt/history.log
 sudo systemctl status apache2
 ```
 
-![Estado del servicio Apache](img/06-systemctl-status.png)
+![Estado del servicio Apache](Img/6.png)
 
 Lo importante de aquí:
 
@@ -125,7 +125,7 @@ Lo importante de aquí:
 sudo ss -tulpn | grep apache2
 ```
 
-![Puertos en escucha](img/07-ss-puertos.png)
+![Puertos en escucha](Img/7.png)
 
 `ss` enseña los puertos que están abiertos y con `grep` me quedo solo con los de Apache. Se ve que Apache está escuchando en el **puerto 80**, que es el de HTTP. El asterisco quiere decir que escucha en todas las IPs, así que se puede entrar también desde otro ordenador.
 
@@ -135,7 +135,7 @@ sudo ss -tulpn | grep apache2
 curl -I http://localhost
 ```
 
-![curl -I http://localhost](img/08-curl-localhost.png)
+![curl -I http://localhost](Img/8.png)
 
 `curl -I` hace una petición a la web y enseña solo las cabeceras. Sale **200 OK**, que quiere decir que la página carga bien. Los 10671 bytes son lo que ocupa la página por defecto de Apache.
 
@@ -147,7 +147,7 @@ Si en el navegador pongo la IP del servidor (la saco con `ip a`) sale la página
 sudo ufw status
 ```
 
-![sudo ufw status](img/09-ufw-status.png)
+![sudo ufw status](Img/9.png)
 
 En mi máquina el firewall está desactivado, por eso Apache ya funcionaba sin tocar nada. Aun así añado la regla por si lo activo más adelante:
 
@@ -155,7 +155,7 @@ En mi máquina el firewall está desactivado, por eso Apache ya funcionaba sin t
 sudo ufw allow 'Apache'
 ```
 
-![sudo ufw allow 'Apache'](img/10-ufw-allow-apache.png)
+![sudo ufw allow 'Apache'](Img/10.png)
 
 La regla se pone dos veces, una para IPv4 y otra para IPv6.
 
@@ -208,7 +208,7 @@ Un truco que he aprendido: hacer siempre `configtest` antes de reiniciar. Si hay
 ls -l /etc/apache2/
 ```
 
-![Contenido de /etc/apache2](img/11-ls-etc-apache2.png)
+![Contenido de /etc/apache2](Img/11.png)
 
 Aquí está toda la configuración de Apache. Todo es de root, por eso para editar cualquier cosa hay que poner `sudo`. Se ve que hay carpetas por parejas: available y enabled.
 
@@ -233,7 +233,7 @@ Aquí está toda la configuración de Apache. Todo es de root, por eso para edit
 ls -l /etc/apache2/sites-enabled/
 ```
 
-![Enlaces simbólicos en sites-enabled](img/12-sites-enabled-enlaces.png)
+![Enlaces simbólicos en sites-enabled](Img/12.png)
 
 La `l` del principio y la flecha `->` significan que es un enlace simbólico, como un acceso directo de Windows. El archivo de verdad está en sites-available.
 
@@ -253,7 +253,7 @@ Además el archivo solo existe una vez, así que si lo edito el cambio vale dire
 sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
 ```
 
-![Copia de seguridad de apache2.conf](img/13-backup-apache2conf.png)
+![Copia de seguridad de apache2.conf](Img/13.png)
 
 Antes de cambiar nada hago una copia del archivo. Si la lío, solo tengo que volver a copiar el .bak encima y queda como estaba.
 
@@ -263,7 +263,7 @@ Antes de cambiar nada hago una copia del archivo. Si la lío, solo tengo que vol
 echo "<h1>Servidor de DAVITI</h1>" | sudo tee /var/www/html/index.html
 ```
 
-![Nueva página de inicio](img/14-nueva-index.png)
+![Nueva página de inicio](Img/14.png)
 
 Con esto cambio la página principal por una mía. Uso `sudo tee` y no `sudo echo >` porque con `>` el que escribe el archivo es mi usuario normal, y no tiene permiso en esa carpeta.
 
@@ -277,7 +277,7 @@ Hay que cambiar dos archivos:
 sudo nano /etc/apache2/ports.conf
 ```
 
-![Editar ports.conf](img/15-nano-ports-conf.png)
+![Editar ports.conf](Img/15.png)
 
 En `ports.conf` cambio `Listen 80` por `Listen 8080`.
 
@@ -285,7 +285,7 @@ En `ports.conf` cambio `Listen 80` por `Listen 8080`.
 sudo nano /etc/apache2/sites-available/000-default.conf
 ```
 
-![Editar 000-default.conf](img/16-nano-000-default.png)
+![Editar 000-default.conf](Img/16.png)
 
 Y aquí cambio `<VirtualHost *:80>` por `<VirtualHost *:8080>`. Hay que cambiar los dos, si cambias solo uno no funciona.
 
@@ -297,7 +297,7 @@ sudo systemctl reload apache2
 curl -I http://localhost:8080
 ```
 
-![Apache funcionando en el puerto 8080](img/17-puerto-8080-curl.png)
+![Apache funcionando en el puerto 8080](Img/17.png)
 
 Sale Syntax OK (con el aviso de antes, que todavía no lo había quitado) y el curl al puerto 8080 da 200 OK, así que funciona. Al final de la captura se ve que vuelvo a abrir el archivo para dejar el puerto 80 otra vez, como dice la práctica.
 
@@ -311,7 +311,7 @@ sudo a2enconf servername
 sudo systemctl reload apache2
 ```
 
-![Definir ServerName](img/18-servername.png)
+![Definir ServerName](Img/18.png)
 
 Creo un archivo con `ServerName localhost` y lo activo con `a2enconf`. Me salió "already enabled" porque ya lo había activado antes en otro intento.
 
@@ -321,7 +321,7 @@ Lo compruebo:
 sudo apache2ctl configtest
 ```
 
-![configtest sin aviso](img/19-configtest-sin-aviso.png)
+![configtest sin aviso](Img/19.png)
 
 Ahora ya solo sale Syntax OK, el aviso ha desaparecido.
 
@@ -330,7 +330,7 @@ sudo systemctl reload apache2
 sudo systemctl status apache2
 ```
 
-![Recarga y estado del servicio](img/20-reload-status.png)
+![Recarga y estado del servicio](Img/20.png)
 
 En el estado se ve que el reload ha ido bien (pone SUCCESS). También se ve que el PID principal sigue siendo el 7632, el mismo del principio, o sea que con reload Apache no se ha parado en ningún momento.
 
@@ -340,11 +340,11 @@ En el estado se ve que el reload ha ido bien (pone SUCCESS). También se ve que 
 sudo nano /etc/apache2/sites-available/000-default.conf
 ```
 
-![Abrir 000-default.conf](img/21-nano-000-default.png)
+![Abrir 000-default.conf](Img/21.png)
 
 Cambio la línea de `ServerAdmin` y pongo `ServerAdmin daviti@apache2.com`:
 
-![ServerAdmin modificado](img/23-serveradmin.png)
+![ServerAdmin modificado](Img/23.png)
 
 ServerAdmin es el correo del que se encarga del servidor. Sale en algunas páginas de error para que la gente sepa a quién avisar. Venía `webmaster@localhost` y lo he cambiado por el mío.
 
@@ -352,7 +352,7 @@ ServerAdmin es el correo del que se encarga del servidor. Sale en algunas págin
 
 En el mismo archivo añado la línea `ErrorDocument 404 /404.html` antes de `</VirtualHost>`:
 
-![000-default.conf con ErrorDocument](img/22-000-default-errordocument.png)
+![000-default.conf con ErrorDocument](Img/22.png)
 
 Esto hace que cuando alguien entre en una página que no existe, en vez del error normal de Apache le salga mi página 404.html. En la captura se ven los tres cambios: el puerto 80 otra vez, el ServerAdmin y el ErrorDocument.
 
@@ -363,7 +363,7 @@ sudo apache2ctl configtest
 echo "<h1>Error 404: Página no encontrada - Servidor de Daviti</h1>" | sudo tee /var/www/html/404.html
 ```
 
-![Crear la página 404](img/24-pagina-404.png)
+![Crear la página 404](Img/24.png)
 
 Y lo pruebo entrando en una ruta que no existe:
 
@@ -372,7 +372,7 @@ sudo ss -tulpn | grep apache2
 curl -I http://localhost/ruta-inexistente
 ```
 
-![Error 404 personalizado](img/25-curl-404-puerto80.png)
+![Error 404 personalizado](Img/25.png)
 
 Aquí se ven dos cosas:
 
@@ -392,7 +392,7 @@ apache2ctl -M
 ls /etc/apache2/mods-available/
 ```
 
-![Módulos cargados y disponibles](img/26-modulos-cargados.png)
+![Módulos cargados y disponibles](Img/26.png)
 
 `apache2ctl -M` enseña los módulos que están cargados ahora. Hay de dos tipos:
 
@@ -417,7 +417,7 @@ sudo systemctl restart apache2
 apache2ctl -M | grep status
 ```
 
-![Activar y desactivar módulos](img/27-a2enmod-a2dismod.png)
+![Activar y desactivar módulos](Img/27.png)
 
 Lo que se ve en la captura:
 
@@ -465,7 +465,7 @@ echo "<h1>Bienvenido a SITIO 1</h1>" | sudo tee /var/www/sitio1/index.html
 echo "<h1>Bienvenido a SITIO 2</h1>" | sudo tee /var/www/sitio2/index.html
 ```
 
-![Directorios y páginas de los sitios](img/28-vhost-directorios.png)
+![Directorios y páginas de los sitios](Img/28.png)
 
 Cada web necesita su carpeta. Creo las dos y en cada una pongo un index.html con un texto distinto para saber cuál es cuál.
 
@@ -475,7 +475,7 @@ Cada web necesita su carpeta. Creo las dos y en cada una pongo un index.html con
 sudo nano /etc/apache2/sites-available/sitio1.conf
 ```
 
-![sitio1.conf](img/29-sitio1-conf.png)
+![sitio1.conf](Img/29.png)
 
 Lo que significa cada cosa:
 
@@ -491,7 +491,7 @@ Lo que significa cada cosa:
 sudo nano /etc/apache2/sites-available/sitio2.conf
 ```
 
-![sitio2.conf](img/30-sitio2-conf.png)
+![sitio2.conf](Img/30.png)
 
 El de sitio2 es igual, solo cambiando sitio1 por sitio2.
 
@@ -535,7 +535,7 @@ curl http://sitio1.local
 curl http://sitio2.local
 ```
 
-![Virtual hosts funcionando y apache2ctl -S](img/31-a2ensite-apache2ctl-S-curl.png)
+![Virtual hosts funcionando y apache2ctl -S](Img/31.png)
 
 Cada nombre enseña su página, aunque los dos están en el mismo servidor y en el mismo puerto. Funciona.
 
@@ -558,7 +558,7 @@ grep -E "APACHE_RUN_(USER|GROUP)" /etc/apache2/envvars
 ls -ld /var/www/sitio1 /var/www/sitio1/index.html
 ```
 
-![Procesos, usuario de Apache y permisos](img/32-ps-envvars-permisos.png)
+![Procesos, usuario de Apache y permisos](Img/32.png)
 
 Lo que se ve:
 
@@ -577,7 +577,7 @@ sudo find /var/www/sitio1 -type d -exec chmod 755 {} \;
 sudo find /var/www/sitio1 -type f -exec chmod 644 {} \;
 ```
 
-![chown y chmod](img/33-chown-chmod.png)
+![chown y chmod](Img/33.png)
 
 - El `chown` cambia el dueño de la carpeta y de todo lo que tiene dentro a www-data.
 - El primer `find` busca solo las carpetas y les pone 755.

@@ -34,7 +34,7 @@ Lo primero es actualizar el sistema antes de instalar nada, para tener los paque
 sudo apt update
 ```
 
-![sudo apt update](img/01-apt-update.png)
+![sudo apt update](Img/1.png)
 
 Este comando no instala nada, solo descarga la lista nueva de paquetes que hay en los repositorios. Hay que hacerlo antes que el upgrade, si no apt no sabe que hay versiones nuevas.
 
@@ -44,7 +44,7 @@ Este comando no instala nada, solo descarga la lista nueva de paquetes que hay e
 sudo apt upgrade -y
 ```
 
-![sudo apt upgrade -y](img/02-apt-upgrade.png)
+![sudo apt upgrade -y](Img/2.png)
 
 Aquí ya sí se actualizan todos los paquetes que tienen versión nueva. El `-y` es para que no pregunte si quiero continuar y diga que sí directamente.
 

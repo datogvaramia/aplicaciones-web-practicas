@@ -68,7 +68,7 @@ Resultado: `active` dos veces (Apache y MariaDB funcionan) y PHP 8.3.6.
 
 **Qué hace y por qué:** `systemctl is-active` indica si cada servicio está en marcha y `php -v` muestra la versión de PHP. Compruebo que la base (el LAMP de las prácticas anteriores) está bien antes de instalar nada encima.
 
-### ❓ ¿Qué dos "puertas" (programas y puertos) usas para trabajar con el servidor y para qué sirve cada una?
+### ¿Qué dos "puertas" (programas y puertos) usas para trabajar con el servidor y para qué sirve cada una?
 
 - **SSH (puerto 22), con el programa `ssh` en la terminal:** sirve para **administrar** el servidor en modo texto: instalar paquetes, copiar ficheros, configurar y dar permisos.
 - **HTTP (puerto 80), con el navegador:** sirve para **usar** WordPress de forma gráfica: ver la web, terminar el asistente de instalación y entrar al panel de administración.
@@ -135,7 +135,7 @@ Abro `http://192.168.56.18` en el navegador de mi ordenador y aparece el conteni
 
 > **Explicación:** Desde el navegador de mi ordenador entro por la IP del servidor y veo la página por defecto ("Servidor de DAVITI").
 
-### ❓ ¿Qué diferencia hay entre desactivar un sitio con `a2dissite` y borrar sus ficheros? ¿Por qué ahora ves la página por defecto y antes veías sitio1?
+###  ¿Qué diferencia hay entre desactivar un sitio con `a2dissite` y borrar sus ficheros? ¿Por qué ahora ves la página por defecto y antes veías sitio1?
 
 `a2dissite` solo **desactiva** el sitio: elimina el enlace en `sites-enabled`, pero los ficheros y la configuración siguen en su sitio y puedo reactivarlo cuando quiera con `a2ensite`. Borrar los ficheros destruye el sitio y no se puede recuperar.
 
@@ -182,7 +182,7 @@ Tras escribir la contraseña (no se ve), aparece el prompt `MariaDB [wordpress]>
 
 > **Explicación:** Entro con `wp_user` y aparece el prompt `MariaDB [wordpress]>`, lo que confirma que el usuario y la base funcionan.
 
-### ❓ ¿Por qué WordPress usa su propio usuario `wp_user` con permiso solo sobre su base y no el usuario `root` de MariaDB?
+###  ¿Por qué WordPress usa su propio usuario `wp_user` con permiso solo sobre su base y no el usuario `root` de MariaDB?
 
 Por **seguridad (mínimo privilegio)**. `root` puede hacer cualquier cosa en todo el servidor de bases de datos. Si WordPress usara `root` y alguien aprovechara un fallo de WordPress o de un plugin, podría leer, modificar o borrar **todas** las bases de datos. Con `wp_user`, el daño se limita a la base `wordpress`. Además, la contraseña de `root` no queda escrita en `wp-config.php`.
 
@@ -231,7 +231,7 @@ La respuesta es un `302 Found` hacia `/wp-admin/setup-config.php`, es decir, Wor
 
 > **Explicación:** Con `curl -I` veo que el servidor responde con una redirección (302) al instalador de WordPress, así que ya sirve WordPress.
 
-### ❓ Explica qué hace cada uno de los comandos que acabas de ejecutar.
+###  Explica qué hace cada uno de los comandos que acabas de ejecutar.
 
 | Comando | Qué hace |
 |---|---|
@@ -261,7 +261,7 @@ El propietario y el grupo de `/var/www/html` son ahora `www-data www-data`.
 
 > **Explicación:** Cambio el propietario a `www-data` y dejo carpetas en 755 y ficheros en 644 para que WordPress pueda escribir.
 
-### ❓ Explica qué hace cada orden. ¿Por qué hay que cambiar el propietario a `www-data`? ¿Qué podría fallar si siguiera siendo mi usuario?
+###  Explica qué hace cada orden. ¿Por qué hay que cambiar el propietario a `www-data`? ¿Qué podría fallar si siguiera siendo mi usuario?
 
 - `chown -R www-data:www-data /var/www/html`: cambia el propietario y el grupo de la carpeta y de todo su contenido (`-R`, recursivo) a `www-data`.
 - `find ... -type d -exec chmod 755 {} \;`: a todas las **carpetas** les pone permisos `755` (el propietario lee, escribe y entra; el resto solo lee y entra).
@@ -320,7 +320,7 @@ Inicio sesión con el usuario y la contraseña que acabo de crear y entro en el 
 
 **Qué ha pasado por debajo:** al enviar la pantalla 3, WordPress comprobó que podía entrar en la base de datos y creó solo su `wp-config.php`. En la pantalla 5 creó las tablas en MariaDB y mi usuario administrador.
 
-### ❓ ¿Qué partes de la instalación has hecho en la terminal y cuáles en el navegador? ¿Por qué el servidor no necesita interfaz gráfica?
+###  ¿Qué partes de la instalación has hecho en la terminal y cuáles en el navegador? ¿Por qué el servidor no necesita interfaz gráfica?
 
 - **En la terminal (SSH):** preparar Apache, crear la base de datos y el usuario, descargar WordPress, copiarlo a `/var/www/html` y darle permisos.
 - **En el navegador:** terminar la instalación con el asistente (idioma, datos de la base de datos, título, usuario y contraseña) y usar el panel de WordPress.
@@ -364,7 +364,7 @@ Aparecen las 12 tablas que creó WordPress, todas con el prefijo `wp_`:
 | Temas, plugins e imágenes subidas | `/var/www/html/wp-content/` (`themes`, `plugins`, `uploads`) |
 | Entradas, usuarios y ajustes | En la base de datos `wordpress` de MariaDB |
 
-### ❓ ¿Dónde guarda WordPress las entradas: en ficheros del servidor o en la base de datos? ¿Cómo lo has comprobado?
+###  ¿Dónde guarda WordPress las entradas: en ficheros del servidor o en la base de datos? ¿Cómo lo has comprobado?
 
 Las guarda en la **base de datos** (principalmente en la tabla `wp_posts`), no en ficheros. Lo comprobé listando las tablas de la base `wordpress` con `SHOW TABLES;`, donde aparecen `wp_posts`, `wp_users` y `wp_options`, entre otras, y viendo que en `/var/www/html` solo están los ficheros del programa, no el texto de mis entradas.
 
@@ -469,7 +469,7 @@ sudo systemctl restart apache2
 
 **Qué hace y por qué:** `printf` escribe las dos directivas en un fichero propio de configuración de PHP (`99-wordpress.ini`) y `tee` lo guarda con permisos de administrador. Se reinicia Apache para que PHP cargue el cambio. `upload_max_filesize` es el tamaño máximo de un fichero y `post_max_size` el máximo de datos de la petición, que debe ser al menos igual.
 
-### ❓ ¿Por qué las direcciones "bonitas" dan error 404 si Apache no tiene permitido leer el fichero `.htaccess`?
+###  ¿Por qué las direcciones "bonitas" dan error 404 si Apache no tiene permitido leer el fichero `.htaccess`?
 
 Las direcciones bonitas como `/pagina-ejemplo/` no corresponden a ningún fichero real del servidor. WordPress usa en el `.htaccess` unas reglas de reescritura que redirigen cualquier dirección a `index.php`, y este decide qué contenido mostrar. Si Apache tiene `AllowOverride None` (lo predeterminado), **ignora el `.htaccess`**, no aplica esas reglas, busca un fichero o carpeta con ese nombre, no lo encuentra y devuelve **404**.
 
@@ -506,7 +506,7 @@ systemctl is-active mariadb
 
 Al recargar la web vuelve a funcionar.
 
-### ❓ Cuando WordPress muestra "Error al establecer una conexión con la base de datos", ¿qué dos cosas comprobarías y en qué orden?
+###  Cuando WordPress muestra "Error al establecer una conexión con la base de datos", ¿qué dos cosas comprobarías y en qué orden?
 
 1. **Si MariaDB está en marcha:** `systemctl is-active mariadb` (y, si no lo está, `sudo systemctl start mariadb`).
 2. **Si el usuario y la contraseña siguen siendo correctos:** probando a entrar con `mariadb -u wp_user -p wordpress`.

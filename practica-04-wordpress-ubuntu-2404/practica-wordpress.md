@@ -95,7 +95,7 @@ Se desactivan `sitio1` y `sitio2`. El sitio por defecto ya estaba activado (`alr
 **Qué hace cada comando:**
 
 - `a2dissite` desactiva los sitios indicados (quita su enlace de `sites-enabled`), sin borrar sus ficheros.
-- `a2ensite` activa el sitio por defecto, cuya carpeta es `/var/www/html`.
+- `a2ensite` activa el sitio por defecto, cuya carpeta es `/var/www/html`.Update security note to mask passwords.
 - `apache2ctl configtest` revisa que la configuración no tenga errores antes de aplicarla.
 - `systemctl reload apache2` recarga la configuración sin cortar el servicio.
 
@@ -543,7 +543,7 @@ sudo mariadb wordpress -e "SHOW TABLES;"
 | Dirección de la web | `http://192.168.56.18` |
 | Panel de administración | `http://192.168.56.18/wp-admin` |
 | Usuario administrador | Daviti |
-| Contraseña | `********` |
+| Contraseña | `#Ex0qurm0qvWx9#huD` |
 
 ---
 
@@ -560,4 +560,4 @@ sudo mariadb wordpress -e "SHOW TABLES;"
 
 - **Aviso de `ServerName` en Apache:** `configtest` puede avisar de que Apache no tiene un nombre de servidor global. Se soluciona creando `servername.conf` con `ServerName localhost` y habilitándolo con `a2enconf`; en mi servidor esa configuración ya estaba habilitada y `configtest` responde solo `Syntax OK`.
 - **Posible página antigua en lugar de WordPress:** al copiar WordPress hay que borrar antes el `index.html` de `/var/www/html`, y se comprueba con `curl -I http://localhost`, que en mi caso responde con una redirección (`302`) al instalador de WordPress.
-- **Contraseñas en las capturas:** las capturas de las pantallas 3 y 5 del instalador mostraban las contraseñas, así que las tapé antes de subirlas al repositorio y escribí `********` en la memoria.
+- **Contraseñas en las capturas:** las capturas de las pantallas 3 y 5 del instalador mostraban las contraseñas, así que las tapé antes de subirlas al repositorio y escribí `#Ex0qurm0qvWx9#huD` en la memoria.

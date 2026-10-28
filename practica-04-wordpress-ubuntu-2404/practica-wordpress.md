@@ -1,5 +1,6 @@
 # Práctica: Instalación de WordPress en Ubuntu 24.04 (nuestro LAMP en marcha)
 | | |
+|--|--|
 | **Alumno** | Daviti Gvaramia |
 | **Ciclo** | Sistemas Microinformáticos y Redes (SMR) |
 | **Módulo** | Aplicaciones Web |

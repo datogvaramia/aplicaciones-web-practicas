@@ -10,4 +10,4 @@ Repositorio con las memorias de las prácticas del módulo de Aplicaciones Web.
 | 1 | Introducción a HTML básico | [Ver memoria](./practica-01-html-basico/memoria.md) |
 | 2 | Introducción a HTML básico | [Ver memoria](./practica-01-html-basico/memoria.md) |
 | 3 | Practica-03-Instalación de MariaDB | [Ver memoria](./practica-01-html-basico/memoria.md) |
-| 4 | Practica-04-wordpress-ubuntu-2404 | [Ver memoria](./practica-04-wordpress-ubuntu-2404.md)
+| 4 | Practica-04-wordpress-ubuntu-2404 | [Ver memoria](./practica-04-wordpress-ubuntu-24047practica-wordpress.md)

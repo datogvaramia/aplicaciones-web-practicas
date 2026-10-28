@@ -7,7 +7,6 @@
 | **Módulo** | Aplicaciones Web |
 | **Fecha** | 28/10/2026 |
 
-> 🔒 **Nota de seguridad:** en esta memoria no aparece ninguna contraseña. Donde correspondía, he escrito `********` y he tapado los campos de contraseña en las capturas.
 
 ## Índice
 
